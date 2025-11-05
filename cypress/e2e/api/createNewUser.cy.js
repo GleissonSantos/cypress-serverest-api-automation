@@ -3,6 +3,7 @@ import { NewAdministratorUsersBuilder, NewRegularUsersBuilder } from "../../supp
 
 describe('API - Serverest New User Test', () => {
 
+    // Testing GitHub Actions CI/CD pipeline
     it('Register regular user successfully', () => {
         const newUser = NewRegularUsersBuilder.new().build();
 
