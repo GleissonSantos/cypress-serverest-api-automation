@@ -15,7 +15,7 @@ export class NewRegularUsersBuilder {
     }
 
     build() {
-        return { ...this.userRegular }; // Retorna uma CÓPIA do objeto
+        return { ...this.userRegular }; 
     }
 
 }
@@ -35,7 +35,7 @@ export class NewAdministratorUsersBuilder {
     }
 
     build() {
-        return { ...this.userAdmin }; // Retorna uma CÓPIA do objeto
+        return { ...this.userAdmin }; 
     }
 
 }
