@@ -3,7 +3,16 @@ import { NewAdministratorUsersBuilder, NewRegularUsersBuilder } from "../../supp
 
 describe('API - Serverest New User Test', () => {
 
-    // Testing GitHub Actions CI/CD pipeline
+    let createdUserIds = [];
+
+    beforeEach(() => {
+        createdUserIds = []; 
+    });
+
+    afterEach(() => {
+        cy.cleanupUsers(createdUserIds); 
+    });
+
     it('Register regular user successfully', () => {
         const newUser = NewRegularUsersBuilder.new().build();
 
@@ -11,6 +20,7 @@ describe('API - Serverest New User Test', () => {
             .then(res => {
                 expect(res.status).to.eq(201)
                 expect(res.body.message).to.contain('Cadastro realizado com sucesso')
+                createdUserIds.push(res.body._id); 
             })
     })
 
@@ -21,6 +31,7 @@ describe('API - Serverest New User Test', () => {
             .then(res => {
                 expect(res.status).to.eq(201)
                 expect(res.body.message).to.contain('Cadastro realizado com sucesso')
+                createdUserIds.push(res.body._id); 
             })
     })
 })

@@ -3,9 +3,22 @@ import { ProductsBuilder } from "../../support/builders/produtos.builder";
 
 describe('API - Serverest New Product Test', () => {
 
+    let createdUserIds = [];
+
+    beforeEach(() => {
+        createdUserIds = [];
+    });
+
+    afterEach(() => {
+        cy.cleanupUsers(createdUserIds);
+    });
+
+
     it('Register a new product successfully', () => {
 
-        cy.loginAsAdmin().then((token) => {
+        cy.loginAsAdmin().then(({ token, userId }) => {
+            createdUserIds.push(userId);
+
             const newProduct = ProductsBuilder.new().build();
             cy.createProduct(token, newProduct)
                 .then(res => {
@@ -18,7 +31,9 @@ describe('API - Serverest New Product Test', () => {
 
     it('Delete a product successfully', () => {
 
-        cy.loginAsAdmin().then((token) => {
+        cy.loginAsAdmin().then(({ token, userId }) => {
+            createdUserIds.push(userId);
+
             const newProduct = ProductsBuilder.new().build();
             cy.createProduct(token, newProduct)
                 .then(res => {
