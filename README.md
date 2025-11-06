@@ -30,7 +30,9 @@ The ServeRest API is a REST API that simulates an e-commerce backend, providing 
 - 🎲 **Dynamic Data Generation** - Using Faker.js for realistic test data
 - 🔄 **Custom Cypress Commands** - Reusable automation components
 - ✅ **Positive & Negative Test Scenarios** - Comprehensive validation coverage
-- 📊 **Clean Test Reports** - Built-in Cypress reporting
+- 🧹 **Automated Test Data Cleanup** - Automatic cleanup of created users after each test
+- 🔒 **Test Isolation** - Independent test execution with no data interference
+- 📊 **Test Reporting** - Cypress built-in reporting capabilities
 - 🚀 **Easy Setup** - Minimal configuration required
 
 ## 🛠️ Tech Stack
@@ -55,7 +57,7 @@ Before running this project, make sure you have the following installed:
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repository-url>
+   git clone https://github.com/GleissonSantos/cypress-serverest-api-automation.git
    cd cypress-serverest-api-automation
    ```
 
@@ -89,16 +91,22 @@ npx cypress run --spec "cypress/e2e/api/login.cy.js"
 npx cypress run --browser chrome
 ```
 
-### Custom Scripts (Add to package.json)
-```json
-{
-  "scripts": {
-    "test": "cypress run",
-    "test:open": "cypress open",
-    "test:headless": "cypress run --headless",
-    "test:api": "cypress run --spec 'cypress/e2e/api/**/*'"
-  }
-}
+### Available Scripts
+```bash
+# Run all tests in headless mode
+npm run test
+
+# Open Cypress Test Runner
+npm run test:open  
+
+# Run tests in headless mode
+npm run test:headless
+
+# Run only API tests
+npm run test:api
+
+# Run tests with Chrome
+npm run test:chrome
 ```
 
 ## 🧪 Test Scenarios
@@ -106,21 +114,17 @@ npx cypress run --browser chrome
 ### 👤 User Management (`createNewUser.cy.js`)
 - ✅ Create regular user successfully
 - ✅ Create administrator user successfully
-- ❌ Handle duplicate email validation
-- ❌ Handle invalid data scenarios
 
 ### 🔐 Authentication (`login.cy.js`)
 - ✅ Login with valid regular user
 - ✅ Login with valid administrator user
-- ❌ Login with unregistered user
-- ❌ Login with invalid email format
-- ❌ Login without required fields
+- ✅ Login with unregistered user
+- ✅ Login with invalid email format
+- ✅ Login without required fields
 
 ### 📦 Product Management (`createProduct.cy.js`)
 - ✅ Create product successfully (admin only)
 - ✅ Delete product successfully (admin only)
-- ❌ Create product without authorization
-- ❌ Handle invalid product data
 
 ## 🏗️ Design Patterns
 
@@ -163,6 +167,28 @@ Dynamic test data using Faker.js:
 }
 ```
 
+### Automated Cleanup System
+Automatic test data cleanup to ensure test isolation:
+
+```javascript
+describe('Test Suite', () => {
+    let createdUserIds = [];
+
+    beforeEach(() => {
+        createdUserIds = []; // Reset for each test
+    });
+
+    afterEach(() => {
+        cy.cleanupUsers(createdUserIds); // Automatic cleanup
+    });
+
+    it('should create user and clean up after', () => {
+        // Test creates user and adds ID to cleanup array
+        createdUserIds.push(userId);
+    });
+});
+```
+
 
 ## 🤝 Contributing
 
@@ -176,9 +202,11 @@ Dynamic test data using Faker.js:
 
 - ✅ **Separation of Concerns** - Clear separation between test data, test logic, and utilities
 - ✅ **DRY Principle** - Reusable components and custom commands
-- ✅ **Page Object Model** - Structured approach to API endpoints
+- ✅ **Builder Pattern** - Clean and maintainable test data creation
 - ✅ **Dynamic Data Generation** - Avoiding hardcoded test data
 - ✅ **Error Handling** - Proper handling of negative test scenarios
+- ✅ **Test Isolation** - Independent test execution using beforeEach/afterEach hooks
+- ✅ **Resource Management** - Automated cleanup of test data to prevent pollution
 - ✅ **Maintainable Code Structure** - Clean and organized codebase
 
 ## 📞 Support
