@@ -16,8 +16,7 @@ export class ProductsBuilder{
     }
 
     build(){
-        return { ...this.product }; // Retorna uma CÓPIA do objeto
+        return { ...this.product }; 
     }
-
 
 } 
